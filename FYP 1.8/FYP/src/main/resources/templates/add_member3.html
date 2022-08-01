@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<title>Member Sign Up</title>
+<meta name="viewport" content="width=device-width, intial-scale=1">
+<link rel="stylesheet" href="/style/loginSignup.css">
+<script src="/bootstrap/js/verify.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<style>
+	.container-main {
+  	padding: 16px;
+  	background-color: white;
+  	border-radius: 25px;
+	}
+</style>
+<body>
+<div th:replace="fragments/header"></div>
+  <div class="container">
+    
+    <main>
+    <div class="container-main">
+      <h1>Sign Up as Admin</h1>
+      <p>Please fill in this form to register.</p>
+      <hr>
+      <div class="alert alert-success" role="alert" th:text="${success}"
+            th:if="${success}"></div>
+            
+      <form class="needs-validation" th:action="@{/member/save3}"
+        method="post" th:object="${member}" novalidate onsubmit="return validateForm()">
+        <div>
+          <label for="user_name" class="form-label">Name: </label> <input
+            id="user_name" type="text" class="form-control" placeholder="Enter full name" required
+            th:field="*{name}"
+             />
+          <div class="invalid-feedback">Please enter a valid name.</div>
+          <p class="text-danger" 
+            ></p>
+        </div>
+
+
+        <div>
+          <label for="user_username" class="form-label">Username: </label>
+          <input id="user_username" name="user_username" type="text" class="form-control" placeholder="Enter username" required
+          th:field="*{username}"
+            />
+          <div class="invalid-feedback">Please enter a valid username.</div>
+          <p class="text-danger" ></p>
+            <p class="text-danger" role="alert"></p>
+        </div>
+
+	
+		<div>
+
+          <label for="user_password" class="form-label">Password: </label>
+          <input id="user_password" type="password" class="form-control" placeholder="Enter password" required
+          th:field="*{password}"
+            />
+          <div class="invalid-feedback">Please enter a valid password.</div>
+          <p class="text-danger"></p>
+        </div>
+
+
+        <div>
+          <label for="user_email" class="form-label">Email: </label> 
+          <input id="user_email" type="email" class="form-control" placeholder="Enter email" required th:field="*{email}"/>
+          <div class="invalid-feedback">Please enter a valid email.</div>
+          <p class="text-danger"></p>
+        </div>
+        
+        <div>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-control" />
+          <input id="hidden" type="hidden" name="phone-full" th:field="*{contactNumber}">
+          <button type="button" class="btn btn-primary" onclick="process(event)">Verify phone number</button>
+          <div class="invalid-feedback">Please enter a valid mobile number.</div>
+          <p class="text-danger"></p>
+          <div class="alert alert-info alert alert-success" style="display: none"></div>
+      	  <div class="alert alert-error alert alert-danger" style="display: none"></div>
+        </div>
+        
+        
+        <!-- <div class="g-recaptcha" data-sitekey="6Le7h7YgAAAAAH7x3V0rJcDH6tBTV-K4Z0-KjFQB"></div> -->
+        
+        <div class="mt-3">
+          <button type="submit" class="buttonLL">Register</button>
+        </div>
+      </form>
+      <!-- Form Validation -->
+      <script>
+        'use strict'
+        var form = document.querySelector('.needs-validation')
+
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        })
+      </script>
+      <!-- End Form Validation -->
+      
+      <script type="text/javascript">
+        function validateForm(){
+          if(grecaptcha.getResponse()){
+            return true;
+          }else{
+            alert("Please prove that you are not a robot.");
+            return false;
+          }
+        }
+      </script>
+      
+      <script>
+      var input = document.querySelector("#phone");
+      var iti = window.intlTelInput(input, {
+          nationalMode: true,
+          separateDialCode: true,
+          utilsScript:
+        	    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+      });
+      
+      const info = document.querySelector(".alert-info");
+      const error = document.querySelector(".alert-error");
+      
+      function process(event) {
+    	  event.preventDefault();
+
+    	  const phoneNumber = iti.getNumber();
+
+    	  info.style.display = "none";
+    	  error.style.display = "none";
+
+    	  if (iti.isValidNumber()) {
+    	    info.style.display = "";
+    	    info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
+    	  } else {
+    	    error.style.display = "";
+    	    error.innerHTML = `Invalid phone number.`;
+    	  }
+    	 }
+
+      window.iti = iti;
+      var input = document.querySelector("#phone");
+      $("form").submit(function () {
+         $("#hidden").val(iti.getNumber()); 
+      });
+ 	  </script>
+ 	</div>
+    </main>
+  </div>
+<div th:replace="fragments/footer"></div>
+</body>
+</html>

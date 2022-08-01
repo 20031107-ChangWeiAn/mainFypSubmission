@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<script src="/bootstrap/css/bootstrap.js"></script>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>WorldBay</title>
+	<!-- Favicon-->
+	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+	<!-- Bootstrap icons-->
+	<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+			rel="stylesheet" />
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="css/styles.css" rel="stylesheet" />
+
+
+</head>
+
+
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<body>
+
+<header>
+	<div th:replace="fragments/header"></div>
+	<!-- head and footer -->
+</header>
+</body>
+<div class="container">
+
+	<div class="h1">View Items</div>
+	<div>
+		<!--   <form th:action="@{/items/Categories}" method="get">
+            <div class="form-outline" style="display: inline-block" >
+              <input type="text" size="30" class="form-control" placeholder="Search for..." name="val" />
+            </div>
+
+            <div class="input-group-append" style="display: inline-block" >
+                 <button class="btn btn-primary" type="button">
+                   <i class="bi bi-search"></i>
+                 </button>
+               </div>
+             </form> -->
+
+		<!--        <input type="text" size="30" name="q" id="domTextElement" value="" onclick="getValueInput()" placeholder="Search for items..">
+         -->     </div>
+	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for items...">
+
+	<table id = "myTable" class="table bordered">
+		<thead>
+		<tr class="header">
+			<th>Category</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Action</th>
+			
+		<tr>
+		</thead>
+		<tbody  >
+		<th:block id="myUL" th:each="xtreme : ${listXtreme}">
+			<!-- a virtual tag in the Thymeleaf -->
+			<tr>
+				<td id="catName" th:text="${xtreme.category.name}"></td>
+				<!-- display the value -->
+				<td id="name" th:text="${xtreme.name}"></td>
+				<!-- display the value -->
+				<td id="desc" th:text="${xtreme.description}" th:value="${xtreme.description}"></td>
+				<!-- display the value -->
+				<td id="price" th:text="${xtreme.price}"></td>
+				<!-- display the value -->
+				<td id="quantity" th:text="${xtreme.quantity}"></td>
+				<!-- display the value -->
+				<td><a th:href="@{/items/edit/{id}(id=${xtreme.id})}">Edit</a> <!-- create links to other servers -->
+					<a th:href="@{/items/delete/{id}(id=${xtreme.id})}">Delete</a></td>
+				<!-- create links to other servers -->
+
+
+			</tr>
+
+		</th:block>
+
+
+		</tbody>
+		<th:block th:each="orderItem : ${listOrderItem}">
+			<tr>
+				<td th:text="${orderItem.member.name}"></td>
+			</tr>
+		</th:block>
+
+	</table>
+
+	<p id="test"></p>
+
+</div>
+<div class="fixed-bottom">
+	<div th:replace="fragments/footer"></div>
+
+</div>
+<!-- head and footer -->
+
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+      if (!tr[i].classList.contains('header')) {
+        td = tr[i].getElementsByTagName("td"),
+        match = false;
+        for (j = 0; j < td.length; j++) {
+          if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            match = true;
+            break;
+          }
+        }
+        if (!match) {
+          tr[i].style.display = "none";
+        } else {
+          tr[i].style.display = "";
+        }
+     }
+    }
+}
+function sortTable() {
+	  var table, rows, switching, i, x, y, shouldSwitch;
+	  table = document.getElementById("myTable");
+	  switching = true;
+	  /*Make a loop that will continue until
+	  no switching has been done:*/
+	  while (switching) {
+	    //start by saying: no switching is done:
+	    switching = false;
+	    rows = table.rows;
+	    /*Loop through all table rows (except the
+	    first, which contains table headers):*/
+	    for (i = 1; i < (rows.length - 1); i++) {
+
+	      //start by saying there should be no switching:
+	      shouldSwitch = false;
+	      /*Get the two elements you want to compare,
+	      one from current row and one from the next:*/
+	      x = rows[i].getElementsByTagName("td")[4];
+	      y = rows[i + 1].getElementsByTagName("td")[4];
+	      //check if the two rows should switch place:
+	      if (Number(x.innerHTML) > Number(y.innerHTML)) {
+	        //if so, mark as a switch and break the loop:
+	        shouldSwitch = true;
+	        break;
+	      }
+	    }
+	    if (shouldSwitch) {
+	      /*If a switch has been marked, make the switch
+	      and mark that a switch has been done:*/
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	    }
+	  }
+	}
+</script>
+
+
+
+
+</html>

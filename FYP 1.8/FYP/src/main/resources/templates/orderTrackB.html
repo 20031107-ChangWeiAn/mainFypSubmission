@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script data-require="jquery@3.1.1" data-semver="3.1.1"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Assistant');
+body {
+  background: #eee;
+  font-family: Assistant, sans-serif;
+}
+
+.cell-1 {
+  border-collapse: separate;
+  border-spacing: 0 4em;
+  background: #fff;
+  border-bottom: 5px solid transparent;
+  /*background-color: gold;*/
+  background-clip: padding-box;
+}
+
+thead {
+  background: #dddcdc;
+}
+
+.toggle-btn {
+  width: 40px;
+  height: 21px;
+  background: grey;
+  border-radius: 50px;
+  padding: 3px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s 0.1s ease-in-out;
+  -moz-transition: all 0.3s 0.1s ease-in-out;
+  -o-transition: all 0.3s 0.1s ease-in-out;
+  transition: all 0.3s 0.1s ease-in-out;
+}
+
+.toggle-btn > .inner-circle {
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-transition: all 0.3s 0.1s ease-in-out;
+  -moz-transition: all 0.3s 0.1s ease-in-out;
+  -o-transition: all 0.3s 0.1s ease-in-out;
+  transition: all 0.3s 0.1s ease-in-out;
+}
+
+.toggle-btn.active {
+  background: blue !important;
+}
+
+.toggle-btn.active > .inner-circle {
+  margin-left: 19px;
+}
+
+
+</style>
+</head>
+<body>
+	<div th:replace="fragments/header"></div>
+
+<div class="container mt-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10">
+                <div class="rounded">
+                    <div class="table-responsive table-borderless">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                            
+                                    </th>
+                                    <th>Order #</th>
+                                    <th>Company name</th>
+                                    <th>status</th>
+                                    <th>Total</th>
+                                    <th>Customer ID</th>
+                                    <th>Created</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body" th:each="orderItem : ${listOrderItem}">
+                                <tr class="cell-1">
+                                    <td class="text-center">
+                                        
+                                    </td>
+                                    <td  th:text="${orderItem.orderId}"></td>
+                                    <td>DHL</td>
+                                    <td><span class="badge badge-info" th:text="${orderItem.status}"></span></td>
+                                    <!-- <td><span class="badge badge-success">Fullfilled</span></td> -->
+                                    <!-- <td><span class="badge badge-info">Confirmed</span></td> -->
+                                    <!-- <td><span class="badge badge-danger">Partially shipped</span></td> -->
+                                    <td th:text="'$'+${#numbers.formatDecimal(((orderItem.quantity*orderItem.item.price)+orderItem.delivery.cost-v), 2, 2)}"></td>
+                                    <td th:text="${orderItem.member.id}"></td>
+                                    <td th:text="${orderItem.orderdate}"></td>
+                                   <!-- <td th:text="${orderItem.points}"></td> -->
+                                   
+                                    <td class="pointer "><a th:href="@{/UpdateOrder/{id}(id=${orderItem.orderId})}" class="fa fa-ellipsis-h text-black-50"></a></td>
+                                </tr>
+                              
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+function myFunction() {
+  location.replace("orders")
+  //window.navigate("page.html");
+}
+
+</script>    
+    </body>
+    </html>
+    

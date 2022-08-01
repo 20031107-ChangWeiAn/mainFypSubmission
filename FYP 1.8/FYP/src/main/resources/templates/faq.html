@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<title>WorldBay FAQ</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<style>
+body{
+    font-family: 'Work Sans', sans-serif;
+}
+.faq-heading{
+    border-bottom: #777;
+    padding: 20px 60px;
+}
+.faq-container{
+display: flex;
+justify-content: center;
+flex-direction: column;
+
+}
+.hr-line{
+  width: 60%;
+  margin: auto;
+  
+}
+/* Style the buttons that are used to open and close the faq-page body */
+.faq-page {
+    /* background-color: #eee; */
+    color: #444;
+    cursor: pointer;
+    padding: 30px 20px;
+    width: 60%;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    margin: auto;
+
+}
+.faq-body{
+    margin: auto;
+    /* text-align: center; */
+   width: 50%; 
+   padding: auto;
+   
+}
+
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.faq-page:hover {
+    background-color: #F9F9F9;
+}
+
+/* Style the faq-page panel. Note: hidden by default */
+.faq-body {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+
+.faq-page:after {
+    content: '\02795';
+    /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796";
+    /* Unicode character for "minus" sign (-) */
+}
+.btn btn-light {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 200px;
+  display:flex;
+}
+</style>
+
+<body>
+	<main>
+		<div th:replace="fragments/header"></div>
+		
+		<h1 class="faq-heading">WorldBay FAQ'S</h1>
+		<section class="faq-container">
+			<div class="faq-one">
+
+				<!-- faq question -->
+				<h3 class="faq-page">What are the delivery options? [BUYER]</h3>
+
+				<!-- faq answer -->
+				<div class="faq-body">
+					<p>
+						<strong>Express shipping and normal shipping</strong> at the cost of $10 and $5 respectively.
+					</p>
+				</div>
+			</div>
+			<hr class="hr-line">
+
+			<div class="faq-two">
+
+				<!-- faq question -->
+				<h3 class="faq-page">How do I view my wallet balance or points I have accumulated so far? [BUYER]</h3>
+
+				<!-- faq answer -->
+
+				<div class="faq-body">
+					<p>You can view your wallet balance or points under the profile page simply by clicking the top left button and it will lead you to your account profile page.</p>
+				</div>
+			</div>
+			<hr class="hr-line">
+
+
+			<div class="faq-three">
+
+				<!-- faq question -->
+				<h3 class="faq-page">How do I manage return/refund requests from buyers? [SELLER]</h3>
+
+				<!-- faq answer -->
+				<div class="faq-body">
+					<p>Upon receiving a return/refund request from a buyer, you can choose to:
+					<li>Accept the request</li>
+					<li>Counter-propose/negotiate the buyer’s offer</li>
+					<li>Dispute the request</li>
+				
+				<p>You will have to respond to the request <strong>within 2 days</strong>. If you failed to do so, the buyer’s request will be automatically approved and the refund will be processed accordingly.
+				Depending on the nature of the return/refund request, the buyer may be required to return the products before the refund can be processed.
+				<br>For incomplete orders, buyers can opt for partial refund (subject to WorldBay’s review) or return the product(s) for a full refund. 
+				For damaged or wrong orders, buyers will be asked to return the product(s) by default in exchange for a <strong>full refund</strong>.
+				If you do not require your product(s) to be returned, you can discuss and negotiate with the buyer on other arrangements, such as partial refunds without return. 
+				If the buyer accepts your proposal, they will receive your proposed refund amount and not need to return the product(s). 
+				If they reject your proposal, they may return the product(s) either to you or the WorldBay Warehouse. Either you or the warehouse team will perform a quality check to assess if the products meet the return criteria, before they can be approved for refund.
+				<strong>For non-receipt orders</strong>, if you wish to dispute the request, you may prepare supporting documents indicating proof of delivery, if applicable.</p>
+				</div>
+			</div>
+			
+			<div class="faq-four">
+
+				<!-- faq question -->
+				<h3 class="faq-page">When can I report a rating given to me? [SELLER]</h3>
+
+				<!-- faq answer -->
+				<div class="faq-body">
+					<p>WorldBay believes that proper ratings are beneficial to our entire community.
+				However, you may report ratings to our customer service team if your rating contains the following:
+
+				<li>Rating contains inappropriate language (e.g. profanities, hate speech)</li>
+				<li>Rating contains inappropriate picture & Video (e.g. Blank or irrelevant picture or video)</li>
+				<li>Rating contains spam text (e.g. Excessive usage of punctuation marks and emoji)</li>
+				<li>Rating contains private information (e.g. addresses, phone numbers, bank accounts)</li>
+				Please allow 5 working days for the Shopee Team to review and reply. While we understand that negative ratings (especially a 1-star rating without comments) can be aggravating to sellers trying to achieve a high shop rating, Shopee will not take action on ratings unless they fall under the above scenarios.
+				
+				WorldBay will proceed to hide the reviews that contains the following:
+				
+				<li>Rating contains inappropriate language (e.g. profanities, hate speech)</li>
+				<li>Rating contains inappropriate picture & Video (e.g. Blank or irrelevant picture or video)</li>
+				<li>Rating contains spam text (e.g. Excessive usage of punctuation marks and emoji)</li>
+				<strong>*Deletion of ratings for the above violations will need consent from buyer/seller.                
+				<br>**WorldBay will proceed to delete for Rating contains private information without any consent.</strong>
+				<br><br>
+				We strongly encourage sellers to contact buyers directly to better understand the reason for the negative rating. Buyers may choose to change their rating after your follow-up actions.</p>
+				</div>
+			</div>
+
+		</section>
+		
+		<div class="center">
+			<a href="/view_enquiry" class="btn btn-light"
+				style="width: 25%; height: auto">We did not answer your questions? Click here to leave your questions behind!</a>
+		</div>
+			
+		<div th:replace="fragments/footer"></div>
+		
+	</main>
+	<script src="main.js"></script>
+</body>
+<script>
+	var faq = document.getElementsByClassName("faq-page");
+	var i;
+	
+	for (i = 0; i < faq.length; i++) {
+	    faq[i].addEventListener("click", function () {
+	        /* Toggle between adding and removing the "active" class,
+	        to highlight the button that controls the panel */
+	        this.classList.toggle("active");
+	
+	        /* Toggle between hiding and showing the active panel */
+	        var body = this.nextElementSibling;
+	        if (body.style.display === "block") {
+	            body.style.display = "none";
+	        } else {
+	            body.style.display = "block";
+	        }
+	    });
+	}
+</script>
+
+</html>

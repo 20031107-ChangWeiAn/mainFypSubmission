@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+	xmlns:sec="http://thymeleaf.org/extras/spring-security">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>WorldBay</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<!-- <link href="css/styles.css" rel="stylesheet" /> -->
+</head>
+<body>
+	<!-- Navigation-->
+	<div th:replace="fragments/header"></div>
+	<!-- head and footer -->
+	<!-- Header-->
+	<header class="bg-dark py-5">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="text-center text-white">
+				<h1 class="display-4 fw-bolder">Worldbay</h1>
+				<p class="lead fw-normal text-white-50 mb-0">Home</p>
+			</div>
+		</div>
+	</header>
+	<!-- Section-->
+	<select id = "currency" onchange="getCurr(this.value)">
+		<option value="SGD">SGD</option>
+		<option value="EUR">EUR</option>
+		<option value="USD">USD</option>
+		<option value="JPY">JPY</option>
+	</select>
+	<section class="py-5">
+
+		<div class="container px-4 px-lg-5 mt-5">
+
+			<div
+				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<th:block th:each="xtreme : ${listXtreme}">
+					<!-- a virtual tag in the Thymeleaf -->
+					<div th:if="${xtreme.quantity != 0}" class="col mb-5">
+
+						<div class="card h-100">
+
+							<!-- Product image-->
+							<img
+								th:src="@{/uploads/items/{id}/{imageName} (id = ${xtreme.id}, imageName = ${xtreme.images})}" />
+							<!-- image -->
+							<!-- Product details-->
+							<div class="card-body p-4">
+								<div class="text-center">
+									<!-- Product name-->
+									<h5 class="fw-bolder">
+										<p th:text="${xtreme.name}"></p>
+										<!-- display the value -->
+									</h5>
+									<p th:text="${xtreme.description}"></p>
+									<!-- display the value -->
+									<!-- Product price-->
+
+									<p>
+										<span class="currCurrency">SGD</span><br/>
+										<span th:text="${xtreme.price}" class="priceVal"></span>
+										<!-- display the value -->
+									</p>
+
+								</div>
+							</div>
+							<!-- Product actions-->
+							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+								<div class="text-center">
+									<a th:href="@{/items/{id}(id=${xtreme.id})}"
+										class="btn btn-outline-dark mt-auto">View Product</a>
+									<!-- create links to other servers -->
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</section>
+	</th:block>
+	<!-- a virtual tag in the Thymeleaf -->
+	<!-- Footer-->
+	<div th:replace="fragments/footer"></div>
+	<!-- head and footer -->
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<!-- <script src="js/scripts.js"></script> -->
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+async function getCurr(currVal){
+	var allPriceVal = document.getElementsByClassName("priceVal");
+	var allCurrCurrency = document.getElementsByClassName("currCurrency");
+	var baseCurr = allCurrCurrency[0].innerText ;
+	var myHeaders = new Headers();
+	myHeaders.append("apikey", "MPl8hqkiPRvDmxyv6g6Hon5ph43e0Ohb");
+
+	var requestOptions = {
+	  method: 'GET',
+	  redirect: 'follow',
+	  headers: myHeaders
+	};
+	var curr_result
+	const res = await fetch("https://api.apilayer.com/fixer/latest?symbols=SGD,EUR,USD,JPY&base="+baseCurr, requestOptions)
+
+	curr_result = await res.json();
+	console.log(curr_result);
+
+	console.log(currVal);
+	for(var i=0; i<allPriceVal.length; i++) {
+		console.log(allPriceVal[i].innerText);
+		var currPriceVal = parseFloat(allPriceVal[i].innerText);
+		var newPrice = currPriceVal * parseFloat(curr_result["rates"][currVal]);
+		console.log(newPrice);
+		allPriceVal[i].innerText = String(newPrice.toFixed(2));
+	}
+	for(var i=0; i<allCurrCurrency.length; i++) {
+		allCurrCurrency[i].innerText = currVal;
+	}
+
+}
+</script>
+
+</html>

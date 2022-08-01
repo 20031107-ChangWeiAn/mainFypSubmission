@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<head xmlns:th="http://www.thymeleaf.org">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+		<script src="/bootstrap/css/bootstrap.js"></script>
+		<meta charset="utf-8" />
+		<meta name="viewport"
+			  content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<title>WorldBay</title>
+		<!-- Favicon-->
+		<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+		<!-- Bootstrap icons-->
+		<link
+				href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+				rel="stylesheet" />
+		<!-- Core theme CSS (includes Bootstrap)-->
+		<link href="css/styles.css" rel="stylesheet" />
+
+	</head>
+
+
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<script src="/bootstrap/css/bootstrap.js"></script>
+<body>
+
+<header>
+	<div th:replace="fragments/header"></div>
+</header>
+</body>
+<div class="container">
+
+	<div class="h1">View History</div>
+	<table class="table bordered">
+		<thead>
+		<tr>
+			<th>Order ID</th>
+			<th>Actions</th>
+		</thead>
+		<tbody>
+		<th:block th:each="orderItem : ${listOrderItem}">
+			<!-- a virtual tag in the Thymeleaf -->
+			<tr >
+				<td th:text="${orderItem}"></td>
+				<!-- display the value -->
+				<td> <a th:href="@{/track/{id}(id=${orderItem})}"><button type="button" class="btn btn-primary">
+					Track your order
+				</button></a>
+				</td>
+
+				<!-- create links to other servers -->
+
+
+			</tr>
+		</th:block>
+
+
+		</tbody>
+	</table>
+
+
+</div>
+
+
+
+<div class="fixed-bottom">
+	<div th:replace="fragments/footer"></div>
+</div>
+
+<!-- head and footer -->
+
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+
+</html>

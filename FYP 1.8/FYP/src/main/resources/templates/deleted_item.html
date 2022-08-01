@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"  
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>WorldBay</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="css/styles.css" rel="stylesheet" />
+
+
+</head>
+
+
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/css/bootstrap.js"></script>
+<body>
+
+	<header>
+		<div th:replace="fragments/header"></div>
+		<!-- head and footer -->
+	</header>
+</body>
+<div class="container">
+
+	<div class="h1">Deleted Items</div>
+	<div>
+	<!-- 	<form th:action="@{/items/Categories}" method="get">
+			<div class="form-outline" style="display: inline-block" >
+				<input type="text" size="30" class="form-control" placeholder="Search for..." name="val" />
+			</div>
+			
+			<div class="input-group-append" style="display: inline-block" >
+		       <button class="btn btn-primary" type="button">
+		         <i class="bi bi-search"></i>
+		       </button>
+		     </div>
+     	</form> -->
+     	
+<!--      	<input type="text" size="30" name="q" id="domTextElement" value="" onclick="getValueInput()" placeholder="Search for items..">
+ -->     </div>
+ <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for items">
+ 
+	<table id = "myTable" class="table bordered">
+		<thead>
+			<tr class="header">
+				<th>Category</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Action</th>
+			<tr>
+		</thead>
+		<tbody  >
+			<th:block id="myUL" th:each="xtreme : ${listXtreme}">
+				<!-- a virtual tag in the Thymeleaf -->
+	<tr>
+		<td id="catName" th:text="${xtreme.category.name}"></td>
+		<!-- display the value -->
+		<td id="name" th:text="${xtreme.name}"></td>
+		<!-- display the value -->
+		<td id="desc" th:text="${xtreme.description}"></td>
+		<!-- display the value -->
+		<td id="price" th:text="${xtreme.price}"></td>
+		<!-- display the value -->
+		<td id="quantity" th:text="${xtreme.quantity}"></td>
+		<!-- display the value -->
+		<td>
+			<a th:href="@{/items/recover/{id}(id=${xtreme.id})}">Recover</a> <!-- create links to other servers -->
+		</td>
+		<!-- create links to other servers -->
+
+
+	</tr>
+
+	</th:block>
+
+
+	</tbody>
+	<th:block th:each="orderItem : ${listOrderItem}">
+		<tr>
+			<td th:text="${orderItem.member.name}"></td>
+		</tr>
+	</th:block>
+	
+	</table>
+	
+	<p id="test"></p>
+
+</div>
+<div class="fixed-bottom">
+	<div th:replace="fragments/footer"></div>
+
+</div>
+<!-- head and footer -->
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+	    if (!tr[i].classList.contains('header')) {
+	      td = tr[i].getElementsByTagName("td"),
+	      match = false;
+	      for (j = 0; j < td.length; j++) {
+	        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+	          match = true;
+	          break;
+	        }
+	      }
+	      if (!match) {
+	        tr[i].style.display = "none";
+	      } else {
+	        tr[i].style.display = "";
+	      }
+	   }
+	  }
+}
+
+</script>
+</html>

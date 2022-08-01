@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<title>WorldBay Enquiry</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<script src="/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<head>
+    <title>WorldBay Enquiry </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<header>
+		<div th:replace="fragments/header"></div>
+	</header>
+</body>
+
+<div class ="container">
+	<br>
+	<div class = "h1">View Enquiries</div>
+	
+	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for enquirys...">
+	
+	<table id = "myTable" class="table bordered">
+		<thead>
+			<tr class="header">
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Question(s)</th>
+				<th>Reply</th>
+				<th sec:authorize="hasRole('ADMIN')">Action</th>
+			<tr>
+		</thead>
+		<tbody>
+			<th:block th:each="enquiry : ${listEnquiry}">
+				<tr>
+					<td th:text="${enquiry.id}"></td>
+					<td th:text="${enquiry.name}"></td>
+					<td th:text="${enquiry.email}"></td>
+					<td th:text="${enquiry.question}"></td>
+					<td th:text="${enquiry.reply}"></td>
+										
+					<td sec:authorize="hasRole('ADMIN')"><a
+						th:href="@{/enquiry/reply/{id}(id=${enquiry.id})}"
+						class="fa fa fa-commenting-o" aria-hidden="true"></a> | <a
+						class="fa fa-trash" aria-hidden="true"
+						th:href="@{/enquiry/delete/{id}(id=${enquiry.id})}"></a></td>
+					
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+	<a href="/enquiry/add" class="btn btn-light">Add Enquiry</a>
+</div>
+
+<br>
+
+<footer>
+	<div th:replace="fragments/footer"></div>
+</footer>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+	    if (!tr[i].classList.contains('header')) {
+	      td = tr[i].getElementsByTagName("td"),
+	      match = false;
+	      for (j = 0; j < td.length; j++) {
+	        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+	          match = true;
+	          break;
+	        }
+	      }
+	      if (!match) {
+	        tr[i].style.display = "none";
+	      } else {
+	        tr[i].style.display = "";
+	      }
+	   }
+	  }
+}
+
+</script>
+
+</html>

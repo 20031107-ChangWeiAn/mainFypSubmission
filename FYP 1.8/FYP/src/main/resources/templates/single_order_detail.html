@@ -1,0 +1,124 @@
+<head>
+<!-- Font Awesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.css"
+  rel="stylesheet"
+/>
+<style>
+
+</style>
+</head>
+<section class="h-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: rgb(27, 36, 48);" th:text="${name}"></span>!</h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <p class="lead fw-normal mb-0" style="color: rgb(27, 36, 48);">Receipt</p>
+            </div>
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row" th:each="cartItem : ${listOrderItem}">
+                  <div class="col-md-2">
+                    <img width="100px" th:src="@{/uploads/items/{id}/{imageName}(id=${cartItem.item.id}, imageName=${cartItem.item.images})}"/>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0" th:text="${cartItem.item.name}"></p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small" th:text="'Qty:'+${cartItem.quantity}"></p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small" th:text="'Unit Price: $'+${cartItem.item.price}"></p>
+                  </div>
+                </div>
+                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                <div class="row d-flex align-items-center">
+                  <div class="col-md-2">
+                    <p class="text-muted mb-0 small">Track Order</p>
+                  </div>
+                  <div class="col-md-10">
+                    <div class="progress" style="height: 6px; border-radius: 16px;">
+                      <div id="p2" class="progress-bar" role="progressbar"
+                        style="width: 0%; border-radius: 16px; background-color: rgb(235, 71, 71);" aria-valuenow="20"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-around mb-1">
+                       <p class="text-muted mt-1 mb-0 small ms-xl-4">Processing Order</p>
+                      <p class="text-muted mt-1 mb-0 small ms-xl-4">Out for delivery</p>
+                      <p class="text-muted mt-1 mb-0 small ms-xl-4">Delivered</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="fw-bold mb-0">Order Details</p>
+              <p class="fw-bold me-4" th:text="'Subtotal: $'+${subTotal}"></p>
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="text-muted mb-0" th:text="${orderId}"></p>
+              <p class="fw-bold me-4" th:text="'Discount:-$'+${vCode}"></p>
+            </div>
+            <div class="d-flex justify-content-between">
+              <p th:text="'Invoice Date: '+${date}" class="text-muted mb-0"></p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-5">
+              <p class="text-muted mb-0"></p>
+              <p class="fw-bold me-4" th:text="'Delivery: $'+${delCost}"></p>
+            </div>
+          </div>
+          <div class="card-footer border-0 px-4 py-5"
+            style="background-color: rgb(235, 71, 71); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+              paid: <span class="h2 mb-0 ms-2" th:text="'$'+${totalCost}"></span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script th:inline="javascript">
+let status = /*[[${status}]]*/"";
+let a = "Processing Stock";
+let b = "Out for Delivery";
+let c = "Delivered";
+let result = status.localeCompare(a);
+let result2 = status.localeCompare(b);
+let result3 = status.localeCompare(c);
+
+
+  if (result==0){
+	document.getElementById("p2").style.width = "20%";
+}    
+
+  if (result2==0){
+		document.getElementById("p2").style.width = "50%";
+	}  
+  
+  if (result3==0){
+		document.getElementById("p2").style.width = "100%";
+
+  }
+
+
+
+</script>

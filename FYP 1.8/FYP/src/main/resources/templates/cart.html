@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>WorldBay</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
+            rel="stylesheet">
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script
+            src="https://www.paypal.com/sdk/js?client-id=AV7Rr2ZHdTvJPyYOKhu90aOtvasVi7VnZ-wcF_Nv9VM6zBTLUBp_ke03RcIMawd85ctym-b8Hwngo7bw&currency=SGD&components=buttons">
+
+    </script>
+    <script data-require="jquery@3.1.1" data-semver="3.1.1"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+    <script th:inline="javascript" src="script.js"></script>
+
+    <style>
+.back-to-shop {
+	margin-top: 4.5rem;
+}
+
+.summary {
+	/* background-color: #ddd; */
+	/* box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+	color: rgb(65, 65, 65);
+	border-radius: 1rem;
+	border: transparent;
+}
+
+select {
+	border: 1px solid rgba(0, 0, 0, 0.137);
+	padding: 1.5vh 1vh;
+	outline: none;
+	width: 100%;
+	background-color: rgb(247, 247, 247);
+}
+
+input {
+	border: 1px solid rgba(0, 0, 0, 0.137);
+	padding: 1vh;
+	margin-bottom: 4vh;
+	outline: none;
+	background-color: rgb(247, 247, 247);
+}
+
+input:focus::-webkit-input-placeholder {
+	color: transparent;
+}
+
+.btn2 {
+	background-color: #000;
+	border-color: #000;
+	color: white;
+	width: 100%;
+	font-size: 0.7rem;
+	padding: 1vh;
+	border-radius: 0;
+}
+
+.btn2:focus {
+	box-shadow: none;
+	outline: none;
+	box-shadow: none;
+	color: white;
+	-webkit-box-shadow: none;
+	-webkit-user-select: none;
+	transition: none;
+}
+
+.btn2:hover {
+	color: white;
+}
+
+.headingFont {
+	font-family: 'Oswald', sans-serif;
+}
+
+    </style>
+
+</head>
+
+<body>
+<div th:replace="fragments/header"></div>
+<div class="container">
+
+    <main>
+        <div class="container ">
+            <div class="row fs-1 text-center headingFont">
+                <p>
+                    SHOPPING CART <span style="color: grey; font-size: 75%"> >
+                            REVIEW AND PAY </span>
+                </p>
+            </div>
+            <div class="row mb-5">
+                <!-- shopping cart -->
+                <div class="col-8">
+                    <div class="container ">
+                        <!-- shopping cart items header -->
+                        <div class="row m-3 border-top border-bottom fs-5">
+                            <div class="col">ITEMS</div>
+                            <div class="col">PRICE</div>
+                            <div class="col">QUANTITY</div>
+                            <div class="col">SUBTOTAL</div>
+                            <div class="col"></div>
+
+                        </div>
+                        <!-- shopping cart rows -->
+                        <div class="row m-3 border-bottom"
+                             th:each="cartItem : ${cartItemList}">
+                            <!-- Item name, description, image -->
+                            <div class="col mb-3">
+                                <h5 th:text="${cartItem.item.name}"></h5>
+                                <p th:text="${cartItem.item.description}"></p>
+                                <img width="100px"
+                                     th:src="@{/uploads/items/{id}/{imageName}(id=${cartItem.item.id}, imageName=${cartItem.item.images})}">
+                            </div>
+                            <!-- Item quantity, price, links -->
+                            <div class="col align-self-center"
+                                 th:text="'$'+${cartItem.item.price}"></div>
+
+                            <div class="col align-self-center">
+
+                                <!-- Update item quantity form -->
+
+                                <form th:action="@{/cart/update/{id}(id=${cartItem.id})}"
+                                      method="post">
+                                    <div class="quantity buttons_added">
+                                        <input type="submit" value="-" class="minus"><input
+                                            type="number" step="1" min="1" max="" name="qty"
+                                            th:value="${cartItem.quantity}" th:id="${cartItem.id}"
+                                            title="qty" class="input-text qty text" size="4" pattern=""
+                                            inputmode=""> <input type="submit" value="+"
+                                                                 class="plus">
+                                    </div>
+                                    <br/>
+                                </form>
+
+                            </div>
+
+                            <div class="col align-self-center"
+                                 th:text="'$'+${cartItem.subtotal}"></div>
+
+                            <div class="col align-self-center">
+                                <!-- Remove item link -->
+
+                                <a class="fa fa-trash-o"
+                                   style="font-size: 24px; text-decoration: none;"
+                                   th:href="@{/cart/remove/{id}(id=${cartItem.id})}"></a>
+                            </div>
+
+<!--                            <p th:text="${cartItem.delivery.name}"></p>-->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Order summary -->
+                <div class="col-4 summary">
+                    <div class="container ">
+                        <div class="row  m-3 border-top border-bottom fw-bold">
+                            <div class="col text-center fs-3">ORDER SUMMARY</div>
+                        </div>
+                        <!-- Order summary rows -->
+                        <div class="row m-3 border-bottom">
+
+                            <div class="col fs-6">
+                                <p>SUBTOTAL</p>
+                            </div>
+
+                            <div class="col fs-6 text-end fw-bold">
+                                <p th:text="'$'+${cartTotal}"></p>
+
+                            </div>
+                            <!-- COMPLETE CODE HERE -->
+
+                            <!-- 	<div class="col-50">
+        <label for="fname">Accepted Cards</label>
+        <div class="icon-container" style="font-size:40px;">
+          <i class="fa fa-cc-visa" style="color:navy;"></i>
+          <i class="fa fa-cc-amex" style="color:blue;"></i>
+          <i class="fa fa-cc-mastercard" style="color:red;"></i>
+          <i class="fa fa-cc-paypal" style="color:orange;"></i>
+        </div> -->
+                            <button onclick="myFunction()" class="btn2">Place Order</button>
+                        </div>
+
+
+                    </div>
+    </main>
+
+
+
+    <div class="back-to-shop">
+        <a href="/index">&leftarrow;</a><span class="text-muted">Back
+				to shop</span>
+    </div>
+
+    <!-- Related items section-->
+
+    <section class="m-md-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">Products you may like...</h2>
+            <div
+                    class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <th:block th:each="item,pStat : ${arrayList}"
+                          th:unless="${pStat.index > 3}">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top"
+                                 th:src="@{/uploads/items/{id}/{imageName}(id=${item.id}, imageName=${item.images})}"
+                                 alt="..."/>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder" th:text="${item.name}"></h5>
+                                    <!-- Product price-->
+                                    <p th:text="'$'+${item.price}"></p>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <a class="btn btn-outline-dark mt-auto" th:href="@{/items/{id}(id=${item.id})}">View
+                                        options</a>
+                                         <form th:action="@{/cart/add/{itemId}(itemId=${item.id})}"
+                                  method="post">
+                                <input class="btn btn-outline-dark mt-auto" type="hidden"
+                                       name="quantity" value=1 style="width: 250px; height: auto"/><br>
+                                <button class="btn btn-outline-dark mt-auto" style="width: 50%; height: auto"><i class="bi bi-cart"></i>
+                                </button>
+                                 </form>
+                                </div>
+                                
+                               
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<div th:replace="fragments/footer"></div>
+
+<script th:inline="javascript">
+		var listVals = /*[[${cartItemList}]]*/"";
+		let total = /*[[${cartTotal}]]*/"";
+
+		function AddDelivery() {
+
+			let a = 0.0;
+
+			for (i = 0; i < listVals.length; i++) {
+				a += listVals[i].subtotal;
+			}
+
+			if (document.getElementById("deliverySelect").selectedIndex == 1) {
+				a += 5.00;
+			} else if (document.getElementById("deliverySelect").selectedIndex == 2) {
+				a += 10.00;
+			} else {
+				a += 15.00;
+			}
+			document.getElementById("cartTotal").innerHTML = "$" + a;
+		}
+
+		function myFunction() {
+			location.replace("/checkout")
+		}
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,146 @@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+		rel="stylesheet" />
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<div class="container px-4 px-lg-5">
+		<a class="navbar-brand" href="/index">Shop at WorldBay</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+				<li class="nav-item"><a class="nav-link active"
+										aria-current="page" href="/index">Home</a></li>
+
+				<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="/aboutuspage">About Us</a></li>
+						<li><a class="dropdown-item" href="/tnc">Terms and
+							Condition Policy</a></li>
+
+
+					</ul></li>
+				<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="/index">All Products</a></li>
+
+
+					</ul></li>
+				<li sec:authorize="hasAnyRole('ADMIN', 'SELLER')"
+					class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+												 id="navbarDropdown" href="#" role="button"
+												 data-bs-toggle="dropdown" aria-expanded="false">Items</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="/items">View Items</a></li>
+						<li><a class="dropdown-item" href="/items/add">Add Items</a></li>
+						<li><a class="dropdown-item" href="/items/deletedItem">Deleted Items</a></li>
+
+						<li sec:authorize="hasAnyRole('ADMIN')"><a
+								class="dropdown-item" href="/chart3">Items Chart</a></li>
+						<li sec:authorize="hasAnyRole('ADMIN')"><a
+								class="dropdown-item" href="/titems">Top Items Sold Chart</a></li>
+					</ul></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN', 'SELLER', 'BUYER')" class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+												 id="navbarDropdown" href="#" role="button"
+												 data-bs-toggle="dropdown" aria-expanded="false">Order Tracker</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<li  sec:authorize="hasAnyRole('SELLER')"><a class="dropdown-item" href="/ordersSeller">View Orders</a></li>
+					<li  sec:authorize="hasAnyRole('SELLER','ADMIN','BUYER')"><a class="dropdown-item" href="/history">My Orders</a></li>
+											</ul></li>
+
+				<li sec:authorize="hasAnyRole('ADMIN', 'SELLER')" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="/categories">View
+							Categories</a></li>
+						<li><a class="dropdown-item" href="/categories/add">Add
+							Categories</a></li>
+					</ul></li>
+
+
+
+
+				<li sec:authorize="hasRole('ADMIN')" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">Users</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="/member">View Admin</a></li>
+						<li><a class="dropdown-item" href="/bs">View Buyer/Seller</a></li>
+						<li><a class="dropdown-item" href="/tbuyer">View Top
+							Buyer</a></li>
+					</ul></li>
+
+				<!--
+
+					<li sec:authorize="hasAnyRole('ADMIN','SELLER','BUYER')"
+          class="nav-item"><a class="nav-link" href="/chatbot">Chatbot</a></li>
+-->
+				<li sec:authorize="hasAnyRole('ADMIN','SELLER','BUYER')" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li class="nav-item"><a class="nav-link" href="/chatbot">Chatbot</a></li>
+						<li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
+						<li class="nav-item"><a class="nav-link" href="/view_enquiry">Enquiry</a></li>
+						<li class="nav-item"><a class="nav-link" href="/voucher">Vouchers</a></li>
+					</ul></li>
+
+
+			</ul>
+
+			<!-- <div sec:authorize="isAuthenticated()">
+                <h5 >
+                    Hello <span sec:authentication="principal.username"></span>!
+                </h5>
+
+            </div> -->
+			<div id="google_translate_element"></div>
+
+			<script type="text/javascript">
+				function googleTranslateElementInit() {
+				  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+				}
+			</script>
+
+			<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+			<a sec:authorize="!isAuthenticated()" class="nav-link" href="/login">Login</a>
+			<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
+				  method="post" class="">
+				<button class="btn nav-link" type="submit">Logout</button>
+			</form>
+			<a href="/wishlist"><button
+					class="btn btn-outline-dark bi bi-heart" type="submit"></button></a>
+
+			&nbsp &nbsp
+			<a href="/cart" class="btn btn-outline-dark">
+				<i class="bi-cart-fill me-1"></i> Cart <span
+					class="badge bg-dark text-white ms-1 rounded-pill"></span></a>
+
+			&nbsp &nbsp <!-- <a href="/profile"><button style="font-size:19px" class="fa fa-user"
+					type="submit"></button></a> -->
+
+			<a href="/profile" class="btn btn-outline-dark">
+				<i class="fa fa-user"></i> <span
+					class="badge bg-dark text-white ms-1 rounded-pill"></span></a>
+
+		</div>
+
+	</div>
+
+</nav>
+<br>

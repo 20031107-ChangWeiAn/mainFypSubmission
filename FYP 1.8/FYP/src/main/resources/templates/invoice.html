@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="col-lg-12">
+				<div  type="text/css" data-hse-inline-css="true" class="container ">
+					<div class="row  m-3 border-top border-bottom fw-bold">
+						<div class="col text-center fs-3">THANK YOU FOR YOUR ORDER!</div>
+					</div>
+					<div class="row  m-3">
+						<div class="col text-left fs-6" th:text="'Order ID: '+${orderId}"></div>
+					</div>
+					<div class="row  m-3">
+						<div class="col text-left fs-6"
+							th:text="'Transaction ID: '+${transactionId}"></div>
+					</div>
+					<!-- shopping cart items header -->
+					<div class="row m-3 border-top border-bottom fs-5">
+						<div class="col">ITEMS</div>
+						<div class="col">PRICE</div>
+						<div class="col">QUANTITY</div>
+						<div class="col">SUBTOTAL</div>
+					</div>
+					<!-- shopping cart rows -->
+					<div class="row m-3 border-bottom"
+						th:each="cartItem : ${cartItemList}">
+						<!-- Item name, description, image -->
+						<div class="col mb-3">
+							<h5 th:text="${cartItem.item.name}"></h5>
+							<p th:text="${cartItem.item.description}"></p>
+						</div>
+						<!-- Item quantity, price, links -->
+						<div class="col align-self-center"
+							th:text="'$'+${cartItem.item.price}"></div>
+						<div class="col align-self-center" th:text="${cartItem.quantity}"></div>
+						<div class="col align-self-center"
+							th:text="'$'+${cartItem.subtotal}"></div>
+
+					</div>
+
+					<div class="row  m-3 border-bottom fw-bold">
+						<div class="col fs-6">
+							<p>TOTAL</p>
+						</div>
+						<div class="col fs-6 text-end">
+							<p id="cartTotal" th:cartTotal="${cartTotal}"
+								th:text="'$'+${cartTotal}"></p>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+</html>
